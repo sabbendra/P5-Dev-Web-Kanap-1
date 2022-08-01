@@ -14,6 +14,7 @@ fetch("http://localhost:3000/api/products/" + kanapId)
 //On veut afficher la réponse de fetch avec json lisible, il faut donc faire 2 then
     /*.then((responseKanap) => console.table(responseKanap))*/
 
+    
     .then((responseKanap) => {
         const kanapImg = document.createElement("img");
         kanapImg.setAttribute("src",responseKanap.imageUrl);
