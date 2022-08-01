@@ -14,20 +14,71 @@ fetch("http://localhost:3000/api/products/" + kanapId)
 //On veut afficher la réponse de fetch avec json lisible, il faut donc faire 2 then
     /*.then((responseKanap) => console.table(responseKanap))*/
 
-    
+
     .then((responseKanap) => {
+        //Affichage de l'image
         const kanapImg = document.createElement("img");
         kanapImg.setAttribute("src",responseKanap.imageUrl);
         kanapImg.setAttribute("alt",responseKanap.altTxt);
         const kanapImgContainer = document.querySelector(".item__img");
-        console.log(responseKanap);
         kanapImgContainer.appendChild(kanapImg);
+        console.log(kanapImg);
+
+        //Affichage du nom
+        const kanapName = responseKanap.name;
+        const productName = document.getElementById("title");
+        productName.textContent = kanapName;
+        console.log(productName);
+
+        //Affichage du prix
+        const kanapprice = responseKanap.price;
+        const productprice = document.getElementById("price");
+        productprice.textContent = kanapprice;
+        console.log(productprice);
+
+        //Affichage de la description
+        const kanapdescription = responseKanap.description;
+        const productdescription = document.getElementById("description");
+        productdescription.textContent = kanapdescription;
+        console.log(productdescription);
+
+        //Affichage de la couleur
+        let select = document.getElementById("colors");
+        console.log(select);
+
+        console.log(responseKanap.colors);
+
+        responseKanap.colors.forEach((colorElement) => {
+            console.log(document.createElement("option"));
+            let tagOption = document.createElement("option");
+
+            tagOption.innerHTML = `${colorElement} `;
+            tagOption.value = `${colorElement} `;
+
+            select.appendChild(tagOption);
+            console.log(tagOption);
+        });
+
+        //Affichage de la quantité
+        let Quantityselect = document.getElementById("quantity");
+        console.log(Quantityselect);
+
+        if (quantity.value >= 1 <= 100) {
+            alert ("la quantité est ajoutée à votre panier")
+        } else {
+            alert ("Merci d'ajouter une quantité supérieur à zéro et infèrieur à 100")
+        }
+        console.log(Quantityselect);
+        
     });
+    
+    /* A vérifier avec Rudy
+    Couleur et quantité */
+   
+    // Valeur enregistrée quand on clique sur le bouton
 
-
-   /* Image ok
-    Titre ok
-    Prix ok
-    Description ok
-    Couleur ok */
-
+    /*addToCart.onclick = () => {
+        localStorage.setItem ("name", name.value);
+        localStorage.setItem ("price", id.value);
+        localStorage.setItem ("quantity", id.value);
+    }*/
