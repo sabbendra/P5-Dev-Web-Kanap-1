@@ -62,17 +62,8 @@ fetch("http://localhost:3000/api/products/" + kanapId)
     });
 
     //ajouter un évènement au panier
-    //On a besoin d'abodrd de récupérer les données sélectionnées
-
-    //sélection de l'id du formulaire concernant le produit
+    //On a besoin d'abord de récupérer les données sélectionnées
     
-    /*let colors = document.getElementById("colors");
-    let quantity = document.getElementById("quantity");
-    let kanapName = document.getElementById("title");
-    let price = document.getElementById("price");*/
-
-    
-
     //sélection du bouton panier
     const btnCart = document.getElementById("addToCart");
     console.log(btnCart);
@@ -80,29 +71,49 @@ fetch("http://localhost:3000/api/products/" + kanapId)
     //écouter le bouton et envoyer le panier dans le localStorage
     btnCart.addEventListener("click",(event)=>{
         event.preventDefault();
-
+    let elementLocalStorage = [];
     let colors = document.getElementById("colors")
     let quantity = document.getElementById("quantity");
     let kanapName = document.getElementById("title").textContent;
-
+    
         //On a besoin de récupérer les données sélectionnées
     let optionsProduct = {
         Id : kanapId,
         name : kanapName,
         colors : colors.value,
-        quantity : quantity.value,
+        quantity : Number(quantity.value),
+       
+       
     };
     console.log(optionsProduct)
-
-    //Affichage de la quantité
-    let Quantityselect = document.getElementById("quantity");
-    if (quantity.value >= 1 && quantity.value <= 100) {
-        alert ("la quantité est ajoutée à votre panier")
-    } else {
-        alert ("Merci d'ajouter une quantité supérieur à zéro et infèrieur à 100")
-    }
-    console.log(Quantityselect);
     
-    })
+    //Affichage message de la quantité et de la couleur
+    let quantitySelect = document.getElementById("quantity");
+    let colorSelect = document.getElementById("colors");
 
+    if (quantity.value >= 1 && quantity.value <= 100 && colors.value != "") {
+        alert ("Votre sélection est ajoutée au panier")
+    } else {
+        alert ("Merci d'ajouter une couleur et une quantité supérieur à zéro et infèrieur à 100")
+        return
+    }
+   
+    localStorage.setItem("id", JSON.stringify(optionsProduct));
 
+    window.location.href ="cart.html";
+          
+    });
+    
+  
+
+    
+   
+    //Ajouter les éléments au localStorage
+    /*const addLocalStorage = () => {
+        elementLocalStorage.push(optionsProduct);
+        localStorage.setItem("id", JSON.stringify(elementLocalStorage));
+    console.log(elementLocalStorage);
+    };
+    elementLocalStorage = JSON.parse(localStorage.getItem("panier"));*/
+
+   

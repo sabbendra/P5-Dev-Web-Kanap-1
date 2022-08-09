@@ -82,4 +82,3 @@ changeQuantity({id:"54"},-5)
 addCart({id:"54","name":"produit","price":8})
 
 console.log(getTotalPrice)*/
-
