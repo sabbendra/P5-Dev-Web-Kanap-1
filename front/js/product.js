@@ -61,7 +61,7 @@ fetch("http://localhost:3000/api/products/" + kanapId)
         
     });
 
-    //ajouter un évènement au panier
+    
     //On a besoin d'abord de récupérer les données sélectionnées
     
     //sélection du bouton panier
@@ -71,7 +71,7 @@ fetch("http://localhost:3000/api/products/" + kanapId)
     //écouter le bouton et envoyer le panier dans le localStorage
     btnCart.addEventListener("click",(event)=>{
         event.preventDefault();
-    let elementLocalStorage = [];
+    
     let colors = document.getElementById("colors")
     let quantity = document.getElementById("quantity");
     let kanapName = document.getElementById("title").textContent;
@@ -97,17 +97,45 @@ fetch("http://localhost:3000/api/products/" + kanapId)
         alert ("Merci d'ajouter une couleur et une quantité supérieur à zéro et infèrieur à 100")
         return
     }
-   
-    localStorage.setItem("id", JSON.stringify(optionsProduct));
 
-    window.location.href ="cart.html";
+    //***************************Le Local Storage*******************************************
+    // stocker les valeurs dans le LocalStorage
+   
+    let productInLocalStorage = JSON.parse(localStorage.getItem("keyproduct"));
+    console.log(productInLocalStorage)
+
+    //pour avoir une popup lorsque la sélection est faite
+    const popupConfirmation = () =>{
+        if(window.confirm( `
+    Votre sélection à bien été ajoutée au panier
+    Consultez le panier OK ou revenir à l'accueil ANNULER`)){
+           window.location.href = "cart.html";
+        }else{
+           window.location.href = "index.html";
+        }
+    }
+    //s'il y a déjà des produits enregistrés dans le LocalStorage
+    if(productInLocalStorage) {
+        productInLocalStorage.push(optionsProduct);
+        localStorage.setItem("keyproduct", JSON.stringify(productInLocalStorage));
+        console.log(productInLocalStorage);
+        popupConfirmation();
+    }
+    //s'il n'y a pas de produits enregistrés dans le LocalStorage
+    else {
+        productInLocalStorage =[];
+        productInLocalStorage.push(optionsProduct);
+        localStorage.setItem("keyproduct", JSON.stringify(productInLocalStorage));
+
+        console.log(productInLocalStorage);
+    }
           
     });
     
   
-
     
-   
+
+
     //Ajouter les éléments au localStorage
     /*const addLocalStorage = () => {
         elementLocalStorage.push(optionsProduct);
