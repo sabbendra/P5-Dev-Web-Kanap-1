@@ -124,32 +124,32 @@ let totalCartPrice = 0;
                 document.location.reload();
               });
               //On récupère la quantité à partir du panier
-                /*function getNumberProduct(){
+                function getNumberProduct(){
                 let cart = getCart();//on récupère le panier
                 let number = 0;
                 for(let product of cart) {
                 number += product.quantity;
                 }
                 return number; 
-                }*/
+                }
               console.log(getNumberProduct);
               totalQuantity.textContent = getNumberProduct();
 
               //On récupère le prix à partir du panier
-               /* function getTotalPrice(){
+               function getTotalPrice(){
                 let cart = getCart();
                 let total = 0;
                 for(let product of cart) {
                 total += product.quantity * product.price;
                 }
                 return total;
-                }   */
+                }   
                 console.log(getTotalPrice);
               totalPrice.textContent = getTotalPrice(kanap, kanapQuantity);
               let oldQuantity = Number(productQuantityPicked.value);
                 
               //Pour changer la quantité
-              /*function changeQuantity(product,quantity){
+              function changeQuantity(product,quantity){
               let cart = getCart();
               let foundProduct = cart.find(productFind => productFind.id == product.id);
               //si le produit est trouvé on change sa quantité
@@ -160,7 +160,7 @@ let totalCartPrice = 0;
               } else {
                   saveCart(cart);
               }
-              }};*/
+              }};
 
               productQuantityPicked.addEventListener("change", () => {
                 /* On définis la nouvelle quantité de produit à l'aide de la fonction changeQuantity, on enregistre dans le panier avec la fonction modifyQuantity */
@@ -169,7 +169,7 @@ let totalCartPrice = 0;
                 totalPrice.textContent = changeTotalPrice(kanap, oldQuantity, Number(productQuantityPicked.value));
                 /* On définis la nouvelle quantité pour l'utiliser lors d'une modification */
                 oldQuantity = Number(productQuantityPicked.value);
-                /* On récupère la quantité totale dans le panier à l'aide de la fonction getNumberProduct */
+                /* On récupère la quantité total dans le panier à l'aide de la fonction getNumberProduct */
                 totalQuantity.textContent = getNumberProduct();
                 });
             
@@ -181,7 +181,7 @@ let totalCartPrice = 0;
               let cartErrorMessage = document.createElement("h2");
               cartErrorMessage.textContent = "Le canapé ne peut être ajouté pour le moment.";
               cartItems.appendChild(cartErrorMessage);
-              total.textContent = "page en erreur";
+              /*total.textContent = "page en erreur";*/
             })
         );
             if (cart.length === 0) {

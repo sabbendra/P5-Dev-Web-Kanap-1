@@ -21,15 +21,24 @@ function addCart(product){
     let cart = getCart();
     //find permet de chercher dans un tableau si l'élément existe déjà
     //on cherche dans le panier si il y a un id qui est égal à l'id du produit que je veux ajouter
-    let foundProduct = cart.find(productFind => productFind.id == product.id);
+    let foundProduct = cart.find(productFind => productFind.id === product.id && productFind.colors === product.colors);
+    //ajouter le check avec la couleur
+    console.log(foundProduct)
     if(foundProduct != undefined) {
-        foundProduct.quantity++;//j'ajoute 1 à laquantité
+        foundProduct.quantity += product.quantity;//j'ajoute 1 à laquantité / il faut récupérer la nouvelle quantité et l'additionner 
     } else {
-        product.quantity =1;
         //on ajoute le produit dans le tableau avec push
         cart.push(product);
     }
     saveCart(cart);
+
+    if(window.confirm( `
+Votre sélection à bien été ajoutée au panier
+Consultez le panier OK ou revenir à l'accueil ANNULER`)){
+       window.location.href = "cart.html";
+    }else{
+       window.location.href = "index.html";
+    }
 }
 
 //Supprimer un produit du panier

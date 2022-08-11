@@ -61,7 +61,6 @@ fetch("http://localhost:3000/api/products/" + kanapId)
         
     });
 
-    
     //On a besoin d'abord de récupérer les données sélectionnées
     
     //sélection du bouton panier
@@ -97,11 +96,13 @@ fetch("http://localhost:3000/api/products/" + kanapId)
         return
     }
 
-    //***************************Le Local Storage*******************************************
+    addCart(optionsProduct)
+    
+    /*/***************************Le Local Storage*******************************************
     // stocker les valeurs dans le LocalStorage
-   //DEMANDER A RUDY SI JE METS "ID" OU "KEYPRODUCT ?????????????????????"
-    let productInLocalStorage = JSON.parse(localStorage.getItem("keyproduct"));
-    console.log(productInLocalStorage);
+   
+    /*let productInLocalStorage = JSON.parse(localStorage.getItem("keyproduct"));
+    console.log(productInLocalStorage);*/
 
     //*************************** Fonctions crées *******************************************
     
@@ -116,22 +117,23 @@ fetch("http://localhost:3000/api/products/" + kanapId)
         }
     }
     //Fonction pour pusher un produit sélectionné dans le LocalStorage
-    const addProductLocalStorage = () => {
+   /* const addProductLocalStorage = () => {
         productInLocalStorage.push(optionsProduct);
 
         localStorage.setItem("keyproduct", JSON.stringify(productInLocalStorage));
-    } 
+    } */
     //s'il y a déjà des produits enregistrés dans le LocalStorage
-    if(productInLocalStorage) {
+    if(optionsProduct) {
         addProductLocalStorage();
         popupConfirmation();
     }
     //s'il n'y a pas de produits enregistrés dans le LocalStorage
     else {
-        productInLocalStorage =[];
+        optionsProduct =[];
         addProductLocalStorage();
         popupConfirmation();
-    }      
+    }   
+
     });
     
   
