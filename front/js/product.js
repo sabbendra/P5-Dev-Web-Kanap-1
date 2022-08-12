@@ -96,44 +96,9 @@ fetch("http://localhost:3000/api/products/" + kanapId)
         return
     }
 
+    //LocalStorage
     addCart(optionsProduct)
-    
-    /*/***************************Le Local Storage*******************************************
-    // stocker les valeurs dans le LocalStorage
    
-    /*let productInLocalStorage = JSON.parse(localStorage.getItem("keyproduct"));
-    console.log(productInLocalStorage);*/
-
-    //*************************** Fonctions crées *******************************************
-    
-    //pour avoir une popup lorsque la sélection est faite
-    const popupConfirmation = () =>{
-        if(window.confirm( `
-    Votre sélection à bien été ajoutée au panier
-    Consultez le panier OK ou revenir à l'accueil ANNULER`)){
-           window.location.href = "cart.html";
-        }else{
-           window.location.href = "index.html";
-        }
-    }
-    //Fonction pour pusher un produit sélectionné dans le LocalStorage
-   /* const addProductLocalStorage = () => {
-        productInLocalStorage.push(optionsProduct);
-
-        localStorage.setItem("keyproduct", JSON.stringify(productInLocalStorage));
-    } */
-    //s'il y a déjà des produits enregistrés dans le LocalStorage
-    if(optionsProduct) {
-        addProductLocalStorage();
-        popupConfirmation();
-    }
-    //s'il n'y a pas de produits enregistrés dans le LocalStorage
-    else {
-        optionsProduct =[];
-        addProductLocalStorage();
-        popupConfirmation();
-    }   
-
     });
     
   

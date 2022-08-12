@@ -17,7 +17,6 @@ function getCart() {
       return JSON.parse(cart);
     }
 }
-console.log(getCart);
 
 //Pour accéder aux éléments 
 const cartItems = document.getElementById("cart__items");
@@ -27,14 +26,13 @@ const cartOrder = document.querySelector(".cart__order");
 let totalQuantity = document.getElementById("totalQuantity");
 let totalPrice = document.getElementById("totalPrice");
 let totalCartPrice = 0;
-
-
-
+  
     for (let product of cart) {
         let kanapId = product.id;
         let kanapColor = product.colors;
         let kanapQuantity = product.quantity;
         let kanapName = product.name;
+        
         fetch("http://localhost:3000/api/products/" + kanapId)
         .then((response) => response.json()
             .then((kanap) => {
@@ -115,14 +113,15 @@ let totalCartPrice = 0;
               productDeleteButton.textContent = "Supprimer";
               productDelete.appendChild(productDeleteButton);
       
-              //Utiliser "the event listener" pour exécuter "removeFromCart" lorsque l'on clique sur le bouton de suppression
+              //Utiliser "the event listener" pour exécuter "removeFromCart" (supprimer) lorsque l'on clique sur le bouton de suppression
               productDeleteButton.addEventListener("click", function () {
-                //Supprimer un produit du panier
-                removeFromCart(product);
-                alert("L'article a bien été retiré de votre panier.");
-                /* chargement de la page */
-                document.location.reload();
+              //Supprimer un produit du panier
+              removeFromCart(product);
+              alert("L'article a bien été retiré de votre panier.");
+              /* chargement de la page */
+              document.location.reload();
               });
+
               //On récupère la quantité à partir du panier
                 function getNumberProduct(){
                 let cart = getCart();//on récupère le panier
@@ -135,32 +134,13 @@ let totalCartPrice = 0;
               console.log(getNumberProduct);
               totalQuantity.textContent = getNumberProduct();
 
-              //On récupère le prix à partir du panier
-               function getTotalPrice(){
-                let cart = getCart();
-                let total = 0;
-                for(let product of cart) {
-                total += product.quantity * product.price;
-                }
-                return total;
-                }   
-                console.log(getTotalPrice);
+                
               totalPrice.textContent = getTotalPrice(kanap, kanapQuantity);
               let oldQuantity = Number(productQuantityPicked.value);
-                
-              //Pour changer la quantité
-              function changeQuantity(product,quantity){
-              let cart = getCart();
-              let foundProduct = cart.find(productFind => productFind.id == product.id);
-              //si le produit est trouvé on change sa quantité
-              if (foundProduct != undefined){
-              foundProduct.quantity += quantity;
-              if (foundProduct.quantity <= 0) {
-                  removeFromCart(foundProduct);
-              } else {
-                  saveCart(cart);
-              }
-              }};
+              
+              //J'appelle la fonction "changeTotalPrice" qui se trouve dans le fichier des fonctions
+              changeTotalPrice()
+              
 
               productQuantityPicked.addEventListener("change", () => {
                 /* On définis la nouvelle quantité de produit à l'aide de la fonction changeQuantity, on enregistre dans le panier avec la fonction modifyQuantity */
@@ -176,20 +156,45 @@ let totalCartPrice = 0;
               })
 
             /* Si la requête de l'API a échoué, créer un message pour informer l'utilisateur que quelque chose s'est mal passé' */
+            // ça ne fonctionne pas
            .catch((error) => {
               console.log("Erreur chargement cart" + error);
               let cartErrorMessage = document.createElement("h2");
               cartErrorMessage.textContent = "Le canapé ne peut être ajouté pour le moment.";
               cartItems.appendChild(cartErrorMessage);
-              /*total.textContent = "page en erreur";*/
+              total.textContent = "page en erreur";
             })
         );
             if (cart.length === 0) {
               cartTitle.textContent = "Votre panier est vide";
-              /*total.innerHTML =
+              total.innerHTML =
                 '<a href="./index.html">Retourner à la page produits.</a>';
               total.style.textAlign = "center";
-              total.style.fontSize = "35px";*/
+              total.style.fontSize = "35px";
             } 
-
           };
+
+          //*************************** Formulaire *******************************************
+          //On créée une key formulaire, et on la met dans une vauriabe
+          const formLocalStorage = localStorage.getItem("keyFormValue");
+
+          //Convertir la chaine de caractère en objet JavaScript
+          const formLocalStorageObject = JSON.parse(formLocalStorage);
+
+          // fonction pour remplir le formulaire par les données du LS si elles existent
+          /*function fillFormLocalStorage (input) {
+            if (formLocalStorageObject == null){
+              alert ("pas d'informations saises")
+            }else {
+              document.querySelector(`#` + input).value = formLocalStorageObject[input];
+            }
+          }
+          console.log(fillFormLocalStorage);
+
+
+          fillFormLocalStorage("Prénom");
+          fillFormLocalStorage("Nom");
+          fillFormLocalStorage("Adresse");
+          fillFormLocalStorage("Ville");
+          fillFormLocalStorage("Email");*/
+

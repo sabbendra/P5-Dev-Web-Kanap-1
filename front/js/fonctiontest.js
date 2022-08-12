@@ -44,24 +44,33 @@ Consultez le panier OK ou revenir à l'accueil ANNULER`)){
 //Supprimer un produit du panier
 function removeFromCart(product){
     let cart = getCart();
-    cart = cart.filter(productFind => productFind.id != product.id);
+    cart = cart.filter(productFind => productFind.id != product.id || productFind.colors != product.colors);
     saveCart(cart);
 }
 
-//Pour changer la quantité
-function changeQuantity(product,quantity){
+ //Pour changer la quantité
+ function changeQuantity(product,quantity){
     let cart = getCart();
-    let foundProduct = cart.find(productFind => productFind.id == product.id);
+    let foundProduct = cart.find((productFind) => productFind.id == product.id && productFind.colors == product.colors) ;
     //si le produit est trouvé on change sa quantité
     if (foundProduct != undefined){
-        foundProduct.quantity += quantity;
-        if (foundProduct.quantity <= 0) {
-            removeFromCart(foundProduct);
-        } else {
-            saveCart(cart);
-        }
+    foundProduct.quantity = quantity;
+    if (foundProduct.quantity <= 0) {
+        removeFromCart(foundProduct);
+    } else {
+        saveCart(cart);
     }
+    }};
 
+    function changeTotalPrice(product, oldQuantity, newQuantity) {
+        if (newQuantity > oldQuantity) {
+          totalCartPrice += product.price * (newQuantity - oldQuantity);
+          return totalCartPrice;
+        } else if (newQuantity < oldQuantity) {
+            totalCartPrice -= product.price * (oldQuantity - newQuantity);
+          return totalCartPrice;
+        }
+      }
     //On récupère la quantité à partir du panier
     function getNumberProduct(){
         let cart = getCart();//on récupère le panier
@@ -83,5 +92,12 @@ function changeQuantity(product,quantity){
         return total;
     }   
     console.log(getTotalPrice)
-}
+
+   
+
+
+
+
+
+
 
