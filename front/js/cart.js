@@ -7,6 +7,7 @@ console.log(productInLocalStorage);*/
     localStorage.setItem("keyproduct", JSON.stringify(cart));
 }*/
 
+
 //on va récupérer la donnée dans le localStorage qui porte la clé "keyproduct"
 let cart = getCart();
 function getCart() { 
@@ -122,19 +123,8 @@ let totalCartPrice = 0;
               document.location.reload();
               });
 
-              //On récupère la quantité à partir du panier
-                function getNumberProduct(){
-                let cart = getCart();//on récupère le panier
-                let number = 0;
-                for(let product of cart) {
-                number += product.quantity;
-                }
-                return number; 
-                }
-              console.log(getNumberProduct);
+              
               totalQuantity.textContent = getNumberProduct();
-
-                
               totalPrice.textContent = getTotalPrice(kanap, kanapQuantity);
               let oldQuantity = Number(productQuantityPicked.value);
               
@@ -143,7 +133,7 @@ let totalCartPrice = 0;
               
 
               productQuantityPicked.addEventListener("change", () => {
-                /* On définis la nouvelle quantité de produit à l'aide de la fonction changeQuantity, on enregistre dans le panier avec la fonction modifyQuantity */
+                /* On définis la nouvelle quantité de produit à l'aide de la fonction changeQuantity, on enregistre dans le panier avec la fonction changeQuantity */
                 kanapQuantity = changeQuantity(product, Number(productQuantityPicked.value));
                 /* On utilise la fonction "changeTotalPrice" pour calculer le nouveau prix de chaque article avec le nombre de quantité */
                 totalPrice.textContent = changeTotalPrice(kanap, oldQuantity, Number(productQuantityPicked.value));
@@ -165,36 +155,68 @@ let totalCartPrice = 0;
               total.textContent = "page en erreur";
             })
         );
+      }
             if (cart.length === 0) {
               cartTitle.textContent = "Votre panier est vide";
               total.innerHTML =
                 '<a href="./index.html">Retourner à la page produits.</a>';
               total.style.textAlign = "center";
               total.style.fontSize = "35px";
-            } 
-          };
+            };
 
-          //*************************** Formulaire *******************************************
-          //On créée une key formulaire, et on la met dans une vauriabe
-          const formLocalStorage = localStorage.getItem("keyFormValue");
+          /************************* FORM ************************/
+          const orderButton = document.getElementById("order");
+          orderButton.addEventListener("click", (e) => submitForm())
+          
+          function submitForm(e){
+            e.preventDefault()// va servir à ne pas raffraichir la page
+            if(cart.length === 0)
+            alert(" merci de valider votre achat")
+            const form = document.querySelector(".cart__order__form");
 
-          //Convertir la chaine de caractère en objet JavaScript
-          const formLocalStorageObject = JSON.parse(formLocalStorage);
-
-          // fonction pour remplir le formulaire par les données du LS si elles existent
-          /*function fillFormLocalStorage (input) {
-            if (formLocalStorageObject == null){
-              alert ("pas d'informations saises")
-            }else {
-              document.querySelector(`#` + input).value = formLocalStorageObject[input];
-            }
+            const body = makeRequestBody ()
+            //on utilise fetch avec post pour poster des données contrairement a get ou on recupère des données
+            fetch("http://localhost:3000/api/products/order", {
+              method: "post",
+              body: JSON.stringify(body),
+              headers: {
+                "Content-Type":"application/json"
+              }
+            })
+            .then((res) => res.json())
+            .then((data) => console.log(data))
+            //console.log(form.elements)
           }
-          console.log(fillFormLocalStorage);
 
+          function makeRequestBody() {
+            const form = document.querySelector(".cart__order__form")
+            const firstName = form.nextElementSibling.firstName.value
+            const lastName = form.nextElementSibling.lastName.value
+            const address = form.nextElementSibling.address.value
+            const city = form.nextElementSibling.city.value
+            const email = form.nextElementSibling.email.value
+            const body = {
+              contact: {
+                firstName: firstName,
+                lastName: lastName,
+                address: address,
+                city: city,
+                email: email,
+              },
+              products: getIdsFromCache()
+            }
+            console.log(body)
+            return body
+          }
+          
+          function getIdsFromCache() {
+            const numberOfProducts = localStorage.length
+            const ids = []
+            for (let i = 0; i < numberOfProducts; i++) {
+              const key = localStorage.key(i)
+              console.log(key)
+              const id = key.split ("-")[0]//pour prendre la première valeur du tableau
+              ids.push(id)
+            }
 
-          fillFormLocalStorage("Prénom");
-          fillFormLocalStorage("Nom");
-          fillFormLocalStorage("Adresse");
-          fillFormLocalStorage("Ville");
-          fillFormLocalStorage("Email");*/
-
+          }
