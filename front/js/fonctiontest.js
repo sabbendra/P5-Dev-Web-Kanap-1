@@ -71,6 +71,14 @@ function removeFromCart(product){
           return totalCartPrice;
         }
       }
+
+      //On récupère le prix à partir du panier
+    function getTotalPrice(product, quantity){
+            totalCartPrice += quantity * product.price;
+            return totalCartPrice;
+        }
+    console.log(getTotalPrice)
+
     //On récupère la quantité à partir du panier
     function getNumberProduct(){
         let cart = getCart();//on récupère le panier
@@ -82,16 +90,7 @@ function removeFromCart(product){
     }
     console.log(getNumberProduct)
 
-    //On récupère le prix à partir du panier
-    function getTotalPrice(){
-        let cart = getCart();
-        let total = 0;
-        for(let product of cart) {
-            total += product.quantity * product.price;
-        }
-        return total;
-    }   
-    console.log(getTotalPrice)
+    
 
    
 
