@@ -1,5 +1,5 @@
 //Récupération de la l'ID dans l'url avec URLSearchParams
-//méthode 2 pour extraire l'ID 
+//méthode pour extraire l'ID 
 const urlSearchParams = new URLSearchParams(window.location.search);
 console.log(window.location);
 
@@ -12,8 +12,6 @@ fetch("http://localhost:3000/api/products/" + kanapId)
 //On demande d'afficher la réponse de fetch avec json (permet de transformer la réponse en js)
     .then((response) => response.json())
 //On veut afficher la réponse de fetch avec json lisible, il faut donc faire 2 then
-    /*.then((responseKanap) => console.table(responseKanap))*/
-
 
     .then((responseKanap) => {
         //Affichage de l'image

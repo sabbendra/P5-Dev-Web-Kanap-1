@@ -1,15 +1,15 @@
 //Création de la constante pour récupérer tous les éléments de l'API
 const productslist = document.getElementById("items");
 
-//Récupération des produits l'API avec la méthode fetch
+//Récupération des produits l'API par une requête avec la méthode fetch
 fetch("http://localhost:3000/api/products")
 //pour traiter la réponse en json
 .then((Response) => Response.json())
 
 // products est la réponse renvoyée par l'API
-.then((products) => {
+.then((products) => { //on utilise la propriété length pour déterminer la longueur du tableau
     for(let i = 0; i < products.length; i++) {
-        // C'est pour récupérer le lien du produit
+        // C'est pour récupérer le lien du produit, document.createElement permet d'attribuer un élément html à la const
         const productlink = document.createElement("a");
         productlink.setAttribute("href", `product.html?id=${products[i]._id}`);
         //link est l'enfant de list on lui attribue

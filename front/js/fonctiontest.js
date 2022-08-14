@@ -155,7 +155,7 @@ function removeFromCart(product){
     }
 
 
-
+   
 
 
 
