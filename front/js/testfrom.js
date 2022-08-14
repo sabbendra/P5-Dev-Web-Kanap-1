@@ -1,5 +1,5 @@
 //*************************** Formulaire *******************************************
-const btnSubmitForm = document.getElementById("cart__order__form__submit");
+const btnSubmitForm = document.getElementById("cart__order__form");
 
 btnSubmitForm.addEventListener("click",(e) => {
   e.preventDefault();
