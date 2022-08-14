@@ -23,7 +23,6 @@ function getCart() {
 const cartItems = document.getElementById("cart__items");
 const cartTitle = document.querySelector("h1");
 const cartPrice = document.querySelector(".cart__price p");
-const cartOrder = document.querySelector(".cart__order");
 let totalQuantity = document.getElementById("totalQuantity");
 let totalPrice = document.getElementById("totalPrice");
 let totalCartPrice = 0;
@@ -32,7 +31,6 @@ let totalCartPrice = 0;
         let kanapId = product.id;
         let kanapColor = product.colors;
         let kanapQuantity = product.quantity;
-        let kanapName = product.name;
         
         fetch("http://localhost:3000/api/products/" + kanapId)
         .then((response) => response.json()
@@ -160,8 +158,6 @@ let totalCartPrice = 0;
               cartTitle.textContent = "Votre panier est vide";
               cartPrice.innerHTML =
                 '<a href="./index.html">Retourner à la page produits.</a>';
-              //total.style.textAlign = "center";
-              //total.style.fontSize = "35px";
             };
 
  /*************************************GESTION DU FORMULAIRE*************************************/

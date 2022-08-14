@@ -69,6 +69,7 @@ fetch("http://localhost:3000/api/products/" + kanapId)
     btnCart.addEventListener("click",(event)=>{
         event.preventDefault();
     
+    //Affichage message de la quantité et de la couleur
     let colors = document.getElementById("colors")
     let quantity = document.getElementById("quantity");
     let kanapName = document.getElementById("title").textContent;
@@ -83,9 +84,6 @@ fetch("http://localhost:3000/api/products/" + kanapId)
     };
     console.log(optionsProduct)
     
-    //Affichage message de la quantité et de la couleur
-    let quantitySelect = document.getElementById("quantity");
-    let colorSelect = document.getElementById("colors");
 
     if (quantity.value >= 1 && quantity.value <= 100 && colors.value != "") {
         alert ("Votre sélection est ajoutée au panier")

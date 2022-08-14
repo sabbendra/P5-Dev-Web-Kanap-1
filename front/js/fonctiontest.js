@@ -133,7 +133,7 @@ function removeFromCart(product){
     }
     
     function addressRegex(input) {
-      let addressRegExp = /^[0-9]{1,4}[a-z0-9éèôöîïûùü' -]{2,50}$/gi;
+      let addressRegExp = /^[0-9]{0,4}[a-z0-9éèôöîïûùü' -]{2,50}$/gi;
       let test = addressRegExp.test(input.value);
       if (test == true) {
         input.nextElementSibling.textContent = "";
