@@ -160,8 +160,8 @@ let totalCartPrice = 0;
               cartTitle.textContent = "Votre panier est vide";
               cartPrice.innerHTML =
                 '<a href="./index.html">Retourner à la page produits.</a>';
-              total.style.textAlign = "center";
-              total.style.fontSize = "35px";
+              //total.style.textAlign = "center";
+              //total.style.fontSize = "35px";
             };
 
  /*************************************GESTION DU FORMULAIRE*************************************/
