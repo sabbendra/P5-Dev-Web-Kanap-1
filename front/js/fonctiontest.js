@@ -89,9 +89,70 @@ function removeFromCart(product){
     }
     
 
-    
+    //FORMULAIRES FONCTIONS
 
-   
+    function getIdsFromCache() {
+      var products = [];
+      for (let product of cart) {
+        products.push(product.id);
+      }
+      return products;
+    }
+    
+    function firstNameRegex(input) {
+      let firstNameRegExp = /^[a-zA-Zàâéèëêïîôùüç -]{2,30}$/gi;
+      let test = firstNameRegExp.test(input.value);
+      if (test == true) {
+        input.nextElementSibling.textContent = "";
+      } else {
+        input.nextElementSibling.textContent =
+          "Merci de renseigner votre prénom.";
+      }
+    }
+    
+    function lastNameRegex(input) {
+      let lastNameRegExp = /^[a-zA-Zàâéèëêïîôùüç -]{2,30}$/gi;
+      let test = lastNameRegExp.test(input.value);
+      if (test == true) {
+        input.nextElementSibling.textContent = "";
+      } else {
+        input.nextElementSibling.textContent =
+          "Merci de renseigner votre nom.";
+      }
+    }
+    
+    function cityRegex(input) {
+      let cityRegExp = /^[a-zA-Zàâéèëêïîôùüç - ()]{2,60}$/gi;
+      let test = cityRegExp.test(input.value);
+      if (test == true) {
+        input.nextElementSibling.textContent = "";
+      } else {
+        input.nextElementSibling.textContent =
+          "Merci de renseigner votre ville.";
+      }
+    }
+    
+    function addressRegex(input) {
+      let addressRegExp = /^[0-9]{1,4}[a-z0-9éèôöîïûùü' -]{2,50}$/gi;
+      let test = addressRegExp.test(input.value);
+      if (test == true) {
+        input.nextElementSibling.textContent = "";
+      } else {
+        input.nextElementSibling.textContent =
+          "Merci de renseigner une adresse valide.";
+      }
+    }
+    
+    function emailRegex(input) {
+      let emailRegExp = /^[a-z0-9.-_]+[@]{1}[a-z0-9.-_]+[.]{1}[a-z]{2,10}$/gi;
+      test = emailRegExp.test(input.value);
+      if (test === true) {
+        input.nextElementSibling.textContent = "";
+      } else {
+        input.nextElementSibling.textContent =
+          "Merci de saisir une adresse email valide";
+      }
+    }
 
 
 

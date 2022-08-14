@@ -38,7 +38,8 @@ const regExEmail = (value)=> {
 //Je créée une fonction pour l'utiliser dans la fonction adresse
 const regExAddress = (value)=> {
   return /^[A-Za-z0-9\s]{5,50}$/.test(value);        
-}          
+}    
+      
 function firstNameControl (){
   //Contrôle de la validité du prénom
 const firstName = formLocalStorage.firstName;
@@ -101,3 +102,91 @@ if(firstNameControl()){
 };
 
 });
+
+
+const form = document.querySelector(".cart__order__form");
+          const orderButton = document.querySelector("#order");
+
+          function submitForm(e){
+            
+            orderButton.addEventListener("click", (e) => submitForm(e))
+            e.preventDefault()// va servir à ne pas raffraichir la page
+            if(cart.length === 0){
+              alert(" merci de valider votre achat")
+              return
+            }
+             if(isFormInValid()) return
+             if(isEmailInValid()) return
+            
+            const body = makeRequestBody ()
+            localStorage.setItem("contact", JSON.stringify(contact));
+            localStorage.setItem("products", JSON.stringify(products));
+            //on utilise fetch avec post pour poster des données contrairement a get ou on recupère des données
+            fetch("http://localhost:3000/api/products/order", {
+              method: "post",
+              body: JSON.stringify({contact, products}),
+              headers: { "Content-Type": "application/json"},
+            })
+            .then((res) => res.json())
+            .then((data) => {
+              const orderId = data.orderId
+              window.location.href = "./confirmation.html" + "?orderId=" + orderId
+              return console.log(data)
+            })
+            .catch((err)=> console.log(err))
+          }
+
+          function isEmailInValid(){
+            const email = document.querySelector("#email").value
+            const regexEmail = /^[A-Za-z0-9+_,-]+@(.+)$/
+              if (regexEmail.test(email) === false) {
+                alert("Merci de renseigner un email valide")
+                return true
+              }  
+                return false
+           } 
+        
+          function isFormInValid () {
+            const form = document.querySelector(".cart__order__form")
+            const inputs = form.querySelector("input")
+            inputs.forEach((input) => {
+              //si l'input est vide
+              if (input.value === "") {
+                alert("please fill all the fields")
+                return true
+              }
+              return false
+            } )
+          }
+
+          function makeRequestBody() {
+            const form = document.querySelector(".cart__order__form")
+            const firstName = form.elements.firstName.value
+            const lastName = form.elements.lastName.value
+            const address = form.elements.address.value
+            const city = form.elements.city.value
+            const email = form.elements.email.value
+            const body = {
+              contact: {
+                firstName: firstName,
+                lastName: lastName,
+                address: address,
+                city: city,
+                email: email,
+              },
+              products: getIdsFromCache()
+            }
+            return body
+          }
+        
+          function getIdsFromCache() {
+            const numberOfProducts = localStorage.length
+            const ids = []
+            for (let i = 0; i < numberOfProducts; i++) {
+              const key = localStorage.key(i)
+              console.log(key)
+              const id = key.split ("-")[0]//pour prendre la première valeur du tableau
+              ids.push(id)
+            }
+            return ids
+          };

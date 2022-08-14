@@ -164,91 +164,64 @@ let totalCartPrice = 0;
               total.style.fontSize = "35px";
             };
 
-          /************************* FORM ************************/
-
-          const form = document.querySelector(".cart__order__form");
-          const orderButton = document.getElementById("order");
-
-          function submitForm(e){
-            const orderButton = document.getElementById("order");
-            orderButton.addEventListener("click", (e) => submitForm())
-            e.preventDefault()// va servir à ne pas raffraichir la page
-            if(cart.length === 0){
-              alert(" merci de valider votre achat")
-              return
-            }
-             if(isFormInValid()) return
-             if(isEmailInValid()) return
-            
-            const body = makeRequestBody ()
-            //on utilise fetch avec post pour poster des données contrairement a get ou on recupère des données
-            fetch("http://localhost:3000/api/products/order", {
-              method: "post",
-              body: JSON.stringify(body),
-              headers: {
-                "Content-Type":"application/json"
-              }
-            })
-            .then((res) => res.json())
-            .then((data) => {
-              const orderId = data.orderId
-              window.location.href = "./confirmation.html" + "?orderId=" + orderId
-              return console.log(data)
-            })
-            .catch((err)=> console.log(err))
-          }
-
-          function isEmailInValid(){
-            const email = document.querySelector("#email").value
-            const regexEmail = /^[A-Za-z0-9+_,-]+@(.+)$/
-              if (regexEmail.test(email) === false) {
-                alert("Merci de renseigner un email valide")
-                return true
-              }  
-                return false
-           } 
-        
-          function isFormInValid () {
-            const form = document.querySelector(".cart__order__form")
-            const inputs = form.querySelector("input")
-            inputs.forEach((input) => {
-              //si l'input est vide
-              if (input.value === "") {
-                alert("please fill all the fields")
-                return true
-              }
-              return false
-            } )
-          }
-
-          function makeRequestBody() {
-            const form = document.querySelector(".cart__order__form")
-            const firstName = form.elements.firstName.value
-            const lastName = form.elements.lastName.value
-            const address = form.elements.address.value
-            const city = form.elements.city.value
-            const email = form.elements.email.value
-            const body = {
-              contact: {
-                firstName: firstName,
-                lastName: lastName,
-                address: address,
-                city: city,
-                email: email,
-              },
-              products: getIdsFromCache()
-            }
-            return body
-          }
-        
-          function getIdsFromCache() {
-            const numberOfProducts = localStorage.length
-            const ids = []
-            for (let i = 0; i < numberOfProducts; i++) {
-              const key = localStorage.key(i)
-              console.log(key)
-              const id = key.split ("-")[0]//pour prendre la première valeur du tableau
-              ids.push(id)
-            }
-            return ids
-          };
+ /*************************************GESTION DU FORMULAIRE*************************************/
+// Création de la constante form qui exécute la fonction qui va créer le corps du formulaire. //
+// Récupération et mise en place de l'écoute du clic sur le bouton "commander" qui soumet également le formulaire.//
+const form = document.querySelector(".cart__order__form");
+const orderButton = document.querySelector("#order");
+form.firstName.addEventListener("input", () => {
+  firstNameRegex(form.firstName);
+});
+form.lastName.addEventListener("input", () => {
+  lastNameRegex(form.lastName);
+});
+form.address.addEventListener("input", () => {
+  addressRegex(form.address);
+});
+form.city.addEventListener("input", () => {
+  cityRegex(form.city);
+});
+form.email.addEventListener("input", () => {
+  emailRegex(form.email);
+});
+orderButton.addEventListener("click", (e) => submitForm(e));
+function submitForm(e) {
+  e.preventDefault();
+  let contact = {
+    firstName: form.firstName.value,
+    lastName: form.lastName.value,
+    city: form.city.value,
+    address: form.address.value,
+    email: form.email.value,
+  };
+  products = getIdsFromCache();
+  localStorage.setItem("contact", JSON.stringify(contact));
+  localStorage.setItem("products", JSON.stringify(products));
+  fetch("http://localhost:3000/api/products/order", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ contact, products }),
+  })
+    .then((response) => response.json())
+    // Définition du nom de la réponse donnée par l'API. //
+    .then((orderFinalization) => {
+      console.log("Formulaire soumis");
+      // Récupération de l'id de commande afin de l'utiliser pour la confirmation. //
+      let orderId = orderFinalization.orderId;
+      console.log(orderId);
+      if (orderId) {
+        // Redirection vers la page de confirmation. //
+        window.location.href = `./confirmation.html?id=${orderId}`;
+        // Suppression du localStorage. //
+        // clearCart();
+      } else {
+        alert(
+          "Veuillez vous assurez d'avoir correctement renseigner le formulaire avant de finaliser votre commande."
+        );
+      }
+    })
+    .catch((error) => {
+      // Log de l'erreur afin de situer la source d'un éventuel échec d'envoi du formulaire. //
+      console.log("Echec envoi formulaire" + error);
+    });
+}
