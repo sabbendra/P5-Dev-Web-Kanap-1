@@ -148,7 +148,7 @@ let totalCartPrice = 0;
             /* Si la requête de l'API a échoué, créer un message pour informer l'utilisateur que quelque chose s'est mal passé' */
             // ça ne fonctionne pas
            .catch((error) => {
-              console.log("Erreur chargement cart" + error);
+              console.log("Erreur chargement cart" + error.stack);
               let cartErrorMessage = document.createElement("h2");
               cartErrorMessage.textContent = "Le canapé ne peut être ajouté pour le moment.";
               cartItems.appendChild(cartErrorMessage);
@@ -158,22 +158,28 @@ let totalCartPrice = 0;
       }
             if (cart.length === 0) {
               cartTitle.textContent = "Votre panier est vide";
-              total.innerHTML =
+              cartPrice.innerHTML =
                 '<a href="./index.html">Retourner à la page produits.</a>';
               total.style.textAlign = "center";
               total.style.fontSize = "35px";
             };
 
           /************************* FORM ************************/
-          const orderButton = document.getElementById("order");
-          orderButton.addEventListener("click", (e) => submitForm())
-          
-          function submitForm(e){
-            e.preventDefault()// va servir à ne pas raffraichir la page
-            if(cart.length === 0)
-            alert(" merci de valider votre achat")
-            const form = document.querySelector(".cart__order__form");
 
+          const form = document.querySelector(".cart__order__form");
+          const orderButton = document.getElementById("order");
+
+          function submitForm(e){
+            const orderButton = document.getElementById("order");
+            orderButton.addEventListener("click", (e) => submitForm())
+            e.preventDefault()// va servir à ne pas raffraichir la page
+            if(cart.length === 0){
+              alert(" merci de valider votre achat")
+              return
+            }
+             if(isFormInValid()) return
+             if(isEmailInValid()) return
+            
             const body = makeRequestBody ()
             //on utilise fetch avec post pour poster des données contrairement a get ou on recupère des données
             fetch("http://localhost:3000/api/products/order", {
@@ -184,17 +190,44 @@ let totalCartPrice = 0;
               }
             })
             .then((res) => res.json())
-            .then((data) => console.log(data))
-            //console.log(form.elements)
+            .then((data) => {
+              const orderId = data.orderId
+              window.location.href = "./confirmation.html" + "?orderId=" + orderId
+              return console.log(data)
+            })
+            .catch((err)=> console.log(err))
+          }
+
+          function isEmailInValid(){
+            const email = document.querySelector("#email").value
+            const regexEmail = /^[A-Za-z0-9+_,-]+@(.+)$/
+              if (regexEmail.test(email) === false) {
+                alert("Merci de renseigner un email valide")
+                return true
+              }  
+                return false
+           } 
+        
+          function isFormInValid () {
+            const form = document.querySelector(".cart__order__form")
+            const inputs = form.querySelector("input")
+            inputs.forEach((input) => {
+              //si l'input est vide
+              if (input.value === "") {
+                alert("please fill all the fields")
+                return true
+              }
+              return false
+            } )
           }
 
           function makeRequestBody() {
             const form = document.querySelector(".cart__order__form")
-            const firstName = form.nextElementSibling.firstName.value
-            const lastName = form.nextElementSibling.lastName.value
-            const address = form.nextElementSibling.address.value
-            const city = form.nextElementSibling.city.value
-            const email = form.nextElementSibling.email.value
+            const firstName = form.elements.firstName.value
+            const lastName = form.elements.lastName.value
+            const address = form.elements.address.value
+            const city = form.elements.city.value
+            const email = form.elements.email.value
             const body = {
               contact: {
                 firstName: firstName,
@@ -205,10 +238,9 @@ let totalCartPrice = 0;
               },
               products: getIdsFromCache()
             }
-            console.log(body)
             return body
           }
-          
+        
           function getIdsFromCache() {
             const numberOfProducts = localStorage.length
             const ids = []
@@ -218,5 +250,5 @@ let totalCartPrice = 0;
               const id = key.split ("-")[0]//pour prendre la première valeur du tableau
               ids.push(id)
             }
-
-          }
+            return ids
+          };

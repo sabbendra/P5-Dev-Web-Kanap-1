@@ -77,7 +77,6 @@ function removeFromCart(product){
             totalCartPrice += quantity * product.price;
             return totalCartPrice;
         }
-    console.log(getTotalPrice)
 
     //On récupère la quantité à partir du panier
     function getNumberProduct(){
@@ -88,7 +87,7 @@ function removeFromCart(product){
         }
         return number; 
     }
-    console.log(getNumberProduct)
+    
 
     
 
