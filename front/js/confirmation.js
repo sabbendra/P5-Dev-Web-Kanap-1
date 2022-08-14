@@ -1,5 +1,6 @@
 const orderId = getOrderId()
 displayOrderId(orderId)
+clearAllCache()
 
 function getOrderId (){
     const urlSearchParams = new URLSearchParams(window.location.search);
@@ -15,3 +16,9 @@ function displayOrderId(orderId){
 }
 
 console.log(orderId)
+
+//localStorage clear
+function clearAllCache(){
+    const cache = window.localStorage
+    cache.clear()
+}
