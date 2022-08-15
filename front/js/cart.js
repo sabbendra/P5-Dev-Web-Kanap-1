@@ -165,6 +165,7 @@ let totalCartPrice = 0;
 // Récupération et mise en place de l'écoute du clic sur le bouton "commander" qui soumet également le formulaire.//
 const form = document.querySelector(".cart__order__form");
 const orderButton = document.querySelector("#order");
+
 form.firstName.addEventListener("input", () => {
   firstNameRegex(form.firstName);
 });
@@ -191,8 +192,15 @@ function submitForm(e) {
     email: form.email.value,
   };
   products = getIdsFromCache();
-  localStorage.setItem("contact", JSON.stringify(contact));
-  localStorage.setItem("products", JSON.stringify(products));
+  //localStorage.setItem("contact", JSON.stringify(contact));
+  //localStorage.setItem("products", JSON.stringify(products));
+  
+  if (products.length === 0) {
+    alert("Votre panier est vide, vous ne pouvez pas valider la commande")
+  }
+
+  if (products.length != 0)
+  
   fetch("http://localhost:3000/api/products/order", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
