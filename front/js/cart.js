@@ -199,7 +199,7 @@ function submitForm(e) {
     alert("Votre panier est vide, vous ne pouvez pas valider la commande")
   }
 
-  if (products.length != 0)
+  
   
   fetch("http://localhost:3000/api/products/order", {
     method: "POST",
@@ -229,3 +229,4 @@ function submitForm(e) {
       console.log("Echec envoi formulaire" + error);
     });
 }
+ 
