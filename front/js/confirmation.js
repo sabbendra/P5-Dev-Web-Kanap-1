@@ -15,7 +15,6 @@ function displayOrderId(orderId){
     orderIdElement.textContent = orderId
 }
 
-console.log(orderId)
 
 //localStorage clear
 function clearAllCache(){

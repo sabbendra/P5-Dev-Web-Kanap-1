@@ -166,22 +166,42 @@ let totalCartPrice = 0;
 const form = document.querySelector(".cart__order__form");
 const orderButton = document.querySelector("#order");
 
+
+form.firstName.setAttribute("pattern", "[a-zA-Zàâéèëêïîôùüç -]{2,60}");
 form.firstName.addEventListener("input", () => {
   firstNameRegex(form.firstName);
 });
+
+form.lastName.setAttribute("pattern", "[a-zA-Zàâéèëêïîôùüç -]{2,60}");
 form.lastName.addEventListener("input", () => {
   lastNameRegex(form.lastName);
 });
+
+form.address.setAttribute(
+  "pattern",
+  "[0-9]{0,4}[a-zA-Zàâéèëêïîôùüç -]{2,60}");
+
 form.address.addEventListener("input", () => {
   addressRegex(form.address);
 });
+
+form.city.setAttribute("pattern", "[a-zA-Zàâéèëêïîôùüç -]{2,60}");
 form.city.addEventListener("input", () => {
   cityRegex(form.city);
 });
+
+form.email.setAttribute(
+  "pattern",
+  "[a-z0-9.-_]+[@]{1}[a-z0-9.-_]+[.]{1}[a-z]{2,10}"
+);
 form.email.addEventListener("input", () => {
   emailRegex(form.email);
 });
-orderButton.addEventListener("click", (e) => submitForm(e));
+
+var products = [];
+products = getIdsFromCache();
+
+form.addEventListener("submit", (e) => submitForm(e));
 function submitForm(e) {
   e.preventDefault();
   let contact = {
@@ -190,17 +210,17 @@ function submitForm(e) {
     city: form.city.value,
     address: form.address.value,
     email: form.email.value,
+    
   };
-  products = getIdsFromCache();
-  //localStorage.setItem("contact", JSON.stringify(contact));
-  //localStorage.setItem("products", JSON.stringify(products));
+  
+  localStorage.setItem("contact", JSON.stringify(contact));
+  localStorage.setItem("products", JSON.stringify(products));
   
   if (products.length === 0) {
     alert("Votre panier est vide, vous ne pouvez pas valider la commande")
-  }
+    localStorage.clear();
+  }else {
 
-  
-  
   fetch("http://localhost:3000/api/products/order", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -209,18 +229,16 @@ function submitForm(e) {
     .then((response) => response.json())
     // Définition du nom de la réponse donnée par l'API. //
     .then((orderFinalization) => {
-      console.log("Formulaire soumis");
+      
       // Récupération de l'id de commande afin de l'utiliser pour la confirmation. //
       let orderId = orderFinalization.orderId;
-      console.log(orderId);
-      if (orderId) {
+      
+      if (orderId)  {
         // Redirection vers la page de confirmation. //
         window.location.href = `./confirmation.html?id=${orderId}`;
-        // Suppression du localStorage. //
-        // clearCart();
       } else {
         alert(
-          "Veuillez vous assurez d'avoir correctement renseigner le formulaire avant de finaliser votre commande."
+          "Veuillez renseigner tous les champs du formulaire pour valider la commande."
         );
       }
     })
@@ -228,5 +246,7 @@ function submitForm(e) {
       // Log de l'erreur afin de situer la source d'un éventuel échec d'envoi du formulaire. //
       console.log("Echec envoi formulaire" + error);
     });
+
 }
+};
  
