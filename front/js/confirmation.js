@@ -15,7 +15,6 @@ function displayOrderId(orderId) {
     orderIdElement.textContent = orderId
 }
 
-
 //localStorage clear
 function clearAllCache() {
     const cache = window.localStorage

@@ -1,5 +1,6 @@
 //on va récupérer la donnée dans le localStorage qui porte la clé "keyproduct"
 let cart = getCart();
+console.log(cart)
 
 function getCart() {
     let cart = localStorage.getItem("keyproduct");
