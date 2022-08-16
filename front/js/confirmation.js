@@ -2,7 +2,7 @@ const orderId = getOrderId()
 displayOrderId(orderId)
 clearAllCache()
 
-function getOrderId (){
+function getOrderId() {
     const urlSearchParams = new URLSearchParams(window.location.search);
     console.log(window.location);
     //Afficher le numéro de commande
@@ -10,14 +10,14 @@ function getOrderId (){
     return orderId
 }
 
-function displayOrderId(orderId){
+function displayOrderId(orderId) {
     const orderIdElement = document.getElementById("orderId")
     orderIdElement.textContent = orderId
 }
 
 
 //localStorage clear
-function clearAllCache(){
+function clearAllCache() {
     const cache = window.localStorage
     cache.clear()
 }
