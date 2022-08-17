@@ -6,7 +6,7 @@ function saveCart(productInLocalStorage) {
   localStorage.setItem("keyproduct", JSON.stringify(productInLocalStorage));
 }
 
-//on va récupérer la donnée dans le localStorage qui porte la clé "keyproduct"
+//on va récupérer les données dans le localStorage qui porte la clé "keyproduct"
 function getCart() {
   let cart = localStorage.getItem("keyproduct");
   if (cart == null) {
@@ -23,7 +23,7 @@ function addCart(product) {
   //on cherche dans le panier si il y a un id qui est égal à l'id du produit que je veux ajouter
   let foundProduct = cart.find(productFind => productFind.id === product.id && productFind.colors === product.colors);
   //ajouter le check avec la couleur
-  console.log(foundProduct)
+  
   if (foundProduct != undefined) {
       foundProduct.quantity += product.quantity; //j'ajoute 1 à laquantité / il faut récupérer la nouvelle quantité et l'additionner 
   } else {
@@ -92,7 +92,7 @@ function getNumberProduct() {
 
 
 //**********************************FORMULAIRES FONCTIONS
-
+//Fonction qui récupère les ID des produits présents dans le panier
 function getIdsFromCache() {
   var products = [];
   for (let product of cart) {

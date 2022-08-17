@@ -92,7 +92,7 @@ for (let product of cart) {
                 productQuantityPicked.setAttribute("value", kanapQuantity);
                 productQuantityPicked.classList.add("itemQuantity");
                 productQuantitySettings.appendChild(productQuantityPicked);
-
+                
                 //Créer l'élément "productDelete", ajouter "cart__item__content__settings__delete" class et définir comme enfant de l'élément productContentSettings 
                 let productDelete = document.createElement("div");
                 productDelete.classList.add("cart__item__content__settings__delete");
@@ -111,6 +111,8 @@ for (let product of cart) {
                     alert("L'article a bien été retiré de votre panier.");
                     /* chargement de la page */
                     document.location.reload();
+                    //Condition pour avoir au moins une couleur et une quantité sup ou = à 1 et inf à 100
+    
                 });
 
 
