@@ -3,8 +3,8 @@ const productslist = document.getElementById("items");
 
 //Récupération des produits l'API par une requête avec la méthode fetch
 fetch("http://localhost:3000/api/products")
-    //pour traiter la réponse en json
-    .then((Response) => Response.json())
+    //On reçoit une réponse qui n'est pas en JSON
+    .then((Response) => Response.json()) // On reçoit la réponse en JSON
 
     // products est la réponse renvoyée par l'API
     .then((products) => { //on utilise la propriété length pour déterminer la longueur du tableau
@@ -29,12 +29,14 @@ fetch("http://localhost:3000/api/products")
             productName.classList.add("productName");
             productName.textContent = products[i].name;
             productArticle.appendChild(productName);
-
+           
             // C'est pour récupérer le descriptif du produit en paragraphe
             const productDescription = document.createElement("p");
             productDescription.classList.add("productDescription");
             productDescription.textContent = products[i].description;
             productArticle.appendChild(productDescription);
         }
+        
     })
+    
 

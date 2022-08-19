@@ -11,7 +11,7 @@ function getCart() {
     }
 }
 
-//Pour accéder aux éléments 
+//Pour accéder aux éléments qui vont composer le panier
 const cartItems = document.getElementById("cart__items");
 const cartTitle = document.querySelector("h1");
 const cartPrice = document.querySelector(".cart__price p");
@@ -197,8 +197,8 @@ products = getIdsFromCache();
 
 form.addEventListener("submit", (e) => submitForm(e));
 
-function submitForm(e) {
-    e.preventDefault();
+function submitForm() {
+   
     let contact = {
         firstName: form.firstName.value,
         lastName: form.lastName.value,
@@ -238,7 +238,7 @@ function submitForm(e) {
                     window.location.href = `./confirmation.html?id=${orderId}`;
                 } else {
                     alert(
-                        "Veuillez renseigner tous les champs du formulaire pour valider la commande."
+                        "Pas de numéro de commande."
                     );
                 }
             })

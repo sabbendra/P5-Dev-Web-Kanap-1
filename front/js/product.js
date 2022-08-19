@@ -38,40 +38,41 @@ fetch("http://localhost:3000/api/products/" + kanapId)
 
         //Affichage de la couleur
         let select = document.getElementById("colors");
+        //je prend seulement la couleur de ma réponse "reponse Kanap"
         responseKanap.colors.forEach((colorElement) => {
             let tagOption = document.createElement("option");
 
             tagOption.innerHTML = `${colorElement} `;
             tagOption.value = `${colorElement} `;
             select.appendChild(tagOption);
+            
         });
-
+        
     });
 
 //On a besoin d'abord de récupérer les données sélectionnées
 
 //sélection du bouton panier
 const btnCart = document.getElementById("addToCart");
-console.log(btnCart);
 
 //écouter le bouton et envoyer le panier dans le localStorage
-btnCart.addEventListener("click", (event) => {
-    event.preventDefault();
+btnCart.addEventListener("click", () => {
 
     //Affichage message de la quantité et de la couleur
     let colors = document.getElementById("colors")
     let quantity = document.getElementById("quantity");
     let kanapName = document.getElementById("title").textContent;
 
-    //On a besoin de récupérer les données sélectionnées
+    //On a besoin de récupérer les données sélectionnées via un objet
     let optionsProduct = {
         id: kanapId,
         name: kanapName,
         colors: colors.value,
         quantity: Number(quantity.value),
+       
     };
-
-    //Condition pour avoir au moins une couleur et une quantité sup ou = à 1 et inf à 100
+    console.log(optionsProduct)
+    //Condition pour avoir au moins une couleur non vide et une quantité sup ou = à 1 et inf à 100
     if (quantity.value >= 1 && quantity.value <= 100 && colors.value != "") {
         alert("Votre sélection est ajoutée au panier")
     } else {
@@ -81,6 +82,7 @@ btnCart.addEventListener("click", (event) => {
 
     //LocalStorage
     addCart(optionsProduct)
+    
 
 });
   
