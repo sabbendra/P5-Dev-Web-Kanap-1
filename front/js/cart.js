@@ -104,6 +104,7 @@ for (let product of cart) {
                 productDeleteButton.textContent = "Supprimer";
                 productDelete.appendChild(productDeleteButton);
 
+             
                 //Utiliser "the event listener" pour exécuter "removeFromCart" (supprimer) lorsque l'on clique sur le bouton de suppression
                 productDeleteButton.addEventListener("click", function() {
                     //Supprimer un produit du panier
@@ -112,6 +113,8 @@ for (let product of cart) {
                     /* chargement de la page */
                     document.location.reload();
                     //Condition pour avoir au moins une couleur et une quantité sup ou = à 1 et inf à 100
+
+                    //Condition pour avoir au moins une couleur non vide et une quantité sup ou = à 1 et inf à 100
     
                 });
 
@@ -125,6 +128,25 @@ for (let product of cart) {
 
 
                 productQuantityPicked.addEventListener("change", () => {
+
+                   if (productQuantityPicked.value >= 1 && productQuantityPicked.value <= 100){
+                     
+                    }else {
+                     alert ("Merci de saisir une quantité supérieur ou égal à 1 ou inférieur ou égal à 100")
+                    };
+
+                    if (productQuantityPicked.value >= 1 && productQuantityPicked.value <= 100) {
+                        
+                    }else {
+                        (productQuantityPicked.value = 0) + (totalPrice.textContent = totalPrice.textContent) 
+                    };
+                  
+
+                    if (productQuantityPicked.value >= 1 && productQuantityPicked.value <= 100) {
+                         
+                    }else {
+                        (totalQuantity.textContent = productQuantityPicked.value) && (totalPrice.textContent = totalPrice.textContent)
+                    };
                     /* On définis la nouvelle quantité de produit à l'aide de la fonction changeQuantity, on enregistre dans le panier avec la fonction changeQuantity */
                     kanapQuantity = changeQuantity(product, Number(productQuantityPicked.value));
                     /* On utilise la fonction "changeTotalPrice" pour calculer le nouveau prix de chaque article avec le nombre de quantité */
@@ -132,10 +154,13 @@ for (let product of cart) {
                     /* On définis la nouvelle quantité pour l'utiliser lors d'une modification */
                     oldQuantity = Number(productQuantityPicked.value);
                     /* On récupère la quantité total dans le panier à l'aide de la fonction getNumberProduct */
-                    totalQuantity.textContent = getNumberProduct();
+                    totalQuantity.textContent = getNumberProduct()
+                    
+                
                 });
+                
 
-            })
+                })
 
             /* Si la requête de l'API a échoué, créer un message pour informer l'utilisateur que quelque chose s'est mal passé' */
             // ça ne fonctionne pas

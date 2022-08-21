@@ -72,8 +72,9 @@ btnCart.addEventListener("click", () => {
        
     };
     console.log(optionsProduct)
+
     //Condition pour avoir au moins une couleur non vide et une quantité sup ou = à 1 et inf à 100
-    if (quantity.value >= 1 && quantity.value <= 100 && colors.value != "") {
+    if (quantity.value >= 1 && quantity.value <= 100 && colors.value != "" ) {
         alert("Votre sélection est ajoutée au panier")
     } else {
         alert("Merci d'ajouter une couleur et une quantité supérieur à zéro et infèrieur à 100")

@@ -50,6 +50,7 @@ function removeFromCart(product) {
 
 //Pour changer la quantité
 function changeQuantity(product, quantity) {
+ 
   let cart = getCart();
   let foundProduct = cart.find((productFind) => productFind.id == product.id && productFind.colors == product.colors);
   //si le produit est trouvé on change sa quantité
@@ -88,7 +89,10 @@ function getNumberProduct() {
       number += product.quantity;
   }
   return number;
+  
 }
+
+
 
 
 //**********************************FORMULAIRES FONCTIONS
