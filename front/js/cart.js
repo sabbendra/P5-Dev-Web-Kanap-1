@@ -128,11 +128,16 @@ for (let product of cart) {
 
 
                 productQuantityPicked.addEventListener("change", () => {
-                    if (productQuantityPicked.value <= 1 ){
+                    if (productQuantityPicked.value < 1 ){
                         alert ("merci de saisir une quantité entre 1 et 100");
                         productQuantityPicked.value = 1;
                         document.location.reload();
                         };
+                        if (productQuantityPicked.value > 100 ){
+                            alert ("merci de saisir une quantité entre 1 et 100");
+                            productQuantityPicked.value = 100;
+                            document.location.reload();
+                            };
 
                      
                     /* On définis la nouvelle quantité de produit à l'aide de la fonction changeQuantity, on enregistre dans le panier avec la fonction changeQuantity */
