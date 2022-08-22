@@ -130,33 +130,29 @@ for (let product of cart) {
                 productQuantityPicked.addEventListener("change", () => {
 
                    if (productQuantityPicked.value >= 1 && productQuantityPicked.value <= 100){
+                    
+                    }else {
+                        alert ("Merci de saisir une quantité valide comprise entre 1 et 100")
+                    };
                      
-                    }else {
-                     alert ("Merci de saisir une quantité supérieur ou égal à 1 ou inférieur ou égal à 100")
-                    };
-
                     if (productQuantityPicked.value >= 1 && productQuantityPicked.value <= 100) {
-                        
-                    }else {
-                        (productQuantityPicked.value = 0) + (totalPrice.textContent = totalPrice.textContent) 
-                    };
-                  
 
-                    if (productQuantityPicked.value >= 1 && productQuantityPicked.value <= 100) {
-                         
-                    }else {
-                        (totalQuantity.textContent = productQuantityPicked.value) && (totalPrice.textContent = totalPrice.textContent)
-                    };
-                    /* On définis la nouvelle quantité de produit à l'aide de la fonction changeQuantity, on enregistre dans le panier avec la fonction changeQuantity */
+                       /* On définis la nouvelle quantité de produit à l'aide de la fonction changeQuantity, on enregistre dans le panier avec la fonction changeQuantity */
                     kanapQuantity = changeQuantity(product, Number(productQuantityPicked.value));
                     /* On utilise la fonction "changeTotalPrice" pour calculer le nouveau prix de chaque article avec le nombre de quantité */
                     totalPrice.textContent = changeTotalPrice(kanap, oldQuantity, Number(productQuantityPicked.value));
                     /* On définis la nouvelle quantité pour l'utiliser lors d'une modification */
                     oldQuantity = Number(productQuantityPicked.value);
                     /* On récupère la quantité total dans le panier à l'aide de la fonction getNumberProduct */
-                    totalQuantity.textContent = getNumberProduct()
-                    
-                
+                    totalQuantity.textContent = getNumberProduct() 
+
+                    }else {
+                         
+                        
+                        (totalQuantity.textContent = oldQuantity) && (totalPrice.textContent = (totalPrice.textContent * oldQuantity))
+                    }
+                    ;
+                   console.log(totalPrice.textContent)
                 });
                 
 
